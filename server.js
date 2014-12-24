@@ -45,7 +45,8 @@ var port = 8080;
 var url_migrate = "http://cloud.shurscript.org:8080/preferences/?apikey=";
 
 // Conexión a mongo, BBDD 'shurscript'
-mongoose.connect('mongodb://localhost:27017/shurscript');
+mongoose.connect('mongodb://heroku_app32808268:tpire2tk9to8tvb83gdtlq968m@ds047930.mongolab.com:47930/heroku_app32808268');
+//mongoose.connect('mongodb://localhost:27017/shurscript');
 
 // Nuestro modelo
 var ShurScript = require('./app/models/shurscript_settings');
