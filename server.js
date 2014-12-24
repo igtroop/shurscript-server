@@ -39,7 +39,7 @@ app.use(bodyParser.json());
 app.set("json spaces", 2);
 
 // Puerto de escucha del servidor web
-var port = 8080;
+var port = process.env.PORT || 8080;
 
 // URL para obtener las preferencias originales e importarlas
 var url_migrate = "http://cloud.shurscript.org:8080/preferences/?apikey=";
