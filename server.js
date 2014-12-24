@@ -83,10 +83,12 @@ router.route('/migrate')
                                 url: url_migrate + apikey,
                                 json: true
                         }, function (error, response, body) {
-
                                 if (!error && response.statusCode === 200) {
-										var old_config = JSON.parse(body);
-                                        console.log(old_config)
+					var shurscript = new ShurScript(body);
+					shurscript.save(function(err) {
+						if (err)
+							res.send(err);
+					});
                                 }
                         })
 
