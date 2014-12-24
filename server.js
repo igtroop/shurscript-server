@@ -87,7 +87,7 @@ router.route('/migrate')
 
                                 if (!error && response.statusCode === 200) {
 										//var old_config = JSON.parse(body);
-                                        console.log(old_config)
+                                        console.log(body)
                                 }
                         })
 
