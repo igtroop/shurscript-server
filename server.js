@@ -39,13 +39,14 @@ app.use(bodyParser.json());
 app.set("json spaces", 2);
 
 // Puerto de escucha del servidor web
-var port = 8080;
+var port = process.env.PORT || 8080;
 
 // URL para obtener las preferencias originales e importarlas
 var url_migrate = "http://cloud.shurscript.org:8080/preferences/?apikey=";
 
 // Conexión a mongo, BBDD 'shurscript'
-mongoose.connect('mongodb://localhost:27017/shurscript');
+var db_uri = process.env.MONGOLAB_URI || 'mongodb://localhost:27017/shurscript'
+mongoose.connect(db_uri);
 
 // Nuestro modelo
 var ShurScript = require('./app/models/shurscript_settings');
@@ -84,11 +85,11 @@ router.route('/migrate')
                                 json: true
                         }, function (error, response, body) {
                                 if (!error && response.statusCode === 200) {
-					var shurscript = new ShurScript(body);
-					shurscript.save(function(err) {
-						if (err)
-							res.send(err);
-					});
+										var shurscript = new ShurScript(body);
+										shurscript.save(function(err) {
+											if (err)
+												res.send(err);
+										});
                                 }
                         })
 
