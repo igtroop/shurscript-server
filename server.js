@@ -62,9 +62,9 @@ var router = express.Router();
  * 4º PROFIT!
  */
 router.use(function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
+	res.header('Access-Control-Allow-Origin', '*');
+	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+	res.header('Access-Control-Allow-Headers', 'Content-Type');
 	res.header("Content-Type", "application/json; charset=utf-8");
 	next();
 });
@@ -76,25 +76,25 @@ router.use(function(req, res, next) {
  */
 router.route('/migrate')
 
-        // Leemos nuestra configuración original del cloud de shurscript y lo guardamos en nuestra BBDD
-        .get(function(req, res) {
-                        var apikey = req.param('apikey');
+		// Leemos nuestra configuración original del cloud de shurscript y lo guardamos en nuestra BBDD
+		.get(function(req, res) {
+						var apikey = req.param('apikey');
 
-                        request({
-                                url: url_migrate + apikey,
-                                json: true
-                        }, function (error, response, body) {
-                                if (!error && response.statusCode === 200) {
+						request({
+								url: url_migrate + apikey,
+								json: true
+						}, function (error, response, body) {
+								if (!error && response.statusCode === 200) {
 										var shurscript = new ShurScript(body);
 										shurscript.save(function(err) {
 											if (err)
 												res.send(err);
 										});
-                                }
-                        })
+								}
+						})
 
-                        res.json({ "ok": "Migrada configuración para apikey: " + apikey });
-        });
+						res.json({ "ok": "Migrada configuración para apikey: " + apikey });
+		});
 
 /*
  * Ruta /config-master
