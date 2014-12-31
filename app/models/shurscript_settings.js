@@ -29,6 +29,7 @@ var Schema       = mongoose.Schema;
 
 var ShurScriptSchema   = new Schema({
 	SHURSCRIPT_Announces_READ_ANNOUNCES:		String,
+	SHURSCRIPT_Announces___preferences:			String,
 	SHURSCRIPT_AutoIcons_MOST_USED_ICONS:		String,
 	SHURSCRIPT_AutoIcons___preferences:			String,
 	SHURSCRIPT_AutoSpoiler___preferences:		String,
