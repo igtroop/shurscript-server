@@ -97,12 +97,11 @@ function getNewApikey() {
 		}
 	});
 
-	var new_shurscript_user = new ShurScript( { apikey: new_apikey });
-	shurscript.save(function(err) {
+	var new_shurscript_user = new ShurScript( {apikey: new_apikey} );
+	new_shurscript_user.save(function(err) {
 		if (err)
 			return "";
 	});
-
 
 	return new_apikey;
 }
