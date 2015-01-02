@@ -97,8 +97,7 @@ function getNewApikey() {
 		}
 	});
 
-	var new_shurscript_user = new ShurScript();
-	new_shurscript_user[apikey] = new_apikey;
+	var new_shurscript_user = new ShurScript( { apikey: new_apikey });
 	shurscript.save(function(err) {
 		if (err)
 			return "";
