@@ -70,6 +70,15 @@ router.use(function(req, res, next) {
 });
 
 /*
+ * Ruta /
+ * No hacemos nada :)
+*/
+router.route('/')
+
+		.get(function(req, res) {
+		});
+
+/*
  * Ruta /migrate
  * Su función es obtener las preferencias del servidor original de shurscript
  * e importarlas en nuestra BBDD
@@ -129,9 +138,13 @@ router.route('/preferences')
 
 	.get(function(req, res) {
 		var apikey = req.param('apikey');
+		if (!apikey) {
+			res.json({ "error": "apikey parameter missing" });
+		}
+
 		ShurScript.findOne().where('apikey', apikey).exec(function(err, shurscript){
 			if (err)
-				res.send(err);
+				res.json({ "error": "Not found" });
 			res.json(shurscript);
 		});		
 	})
