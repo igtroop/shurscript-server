@@ -204,7 +204,8 @@ router.route('/preferences')
 				res.json(shurscript);
 			}
 			else {
-				res.json({ "error": "Not found" });
+				// Código de estado 403 = API Key no encontrada
+				res.status(403).json({ "error": "Not found" });
 			}
 		});
 	})
