@@ -107,14 +107,14 @@ router.route('/config-master')
 			res.json(
 				{
 					"web": "http://shurscript.org/",
-					"fcThread": "https://github.com/TheBronx/shurscript/wiki/Oficial",
-					"imagesURL": "http://static.shurscript.org/img/",
-					"repositoryURL": "https://github.com/TheBronx/shurscript/",
-					"updateURL": "http://static.shurscript.org/js/stable/0.288.0/shurscript.min.user.js",
-					"installURL": "http://static.shurscript.org/js/stable/0.288.0/shurscript.min.user.js",
-					"visualChangelog": "https://github.com/TheBronx/shurscript/blob/master/CHANGELOG.md",
-					"visualFAQ": "https://github.com/TheBronx/shurscript/wiki/FAQ-(Indice)",
-					"rawChangelog": "https://github.com/TheBronx/shurscript/raw/master/CHANGELOG.md",
+					"fcThread": "https://github.com/igtroop/shurscript/wiki/Oficial",
+					"imagesURL": "https://raw.github.com/igtroop/shurscript/anycloud/images/",
+					"repositoryURL": "https://github.com/igtroop/shurscript/",
+					"updateURL": "https://github.com/igtroop/shurscript/raw/anycloud/shurscript.user.js",
+					"installURL": "https://github.com/igtroop/shurscript/raw/anycloud/shurscript.user.js",
+					"visualChangelog": "https://github.com/igtroop/shurscript/blob/anycloud/CHANGELOG.md",
+					"visualFAQ": "https://github.com/igtroop/shurscript/wiki/FAQ-(Indice)",
+					"rawChangelog": "https://github.com/igtroop/shurscript/raw/anycloud/CHANGELOG.md",
 					"imgurClientID": "e115ac41fea372d"
 				}
 			);
