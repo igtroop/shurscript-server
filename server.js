@@ -223,10 +223,10 @@ router.route('/preferences/:setting')
 	.put(function(req, res) {
 		var apikey = req.param('apikey');
 		ShurScript.findOne().where('apikey', apikey).exec(function(err, shurscript){
-			if (err) {
+			if (err)
 				res.send(err);
-			}
-			else {
+
+			if (shurscript) {
 				shurscript[req.params.setting] = req.body.value;
 				shurscript.save(function(err) {
 					if (err) {
