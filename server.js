@@ -27,6 +27,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var request = require("request")
+var crypto = require('crypto');
 
 // Sólo para propositos de depuración
 var morgan     = require('morgan');
@@ -53,6 +54,51 @@ var ShurScript = require('./app/models/shurscript_settings');
 
 // Creamos el router
 var router = express.Router();
+
+// Función para generar una cadena aleatoria que valdrá para la shurkey, copiada descaradamente de http://stackoverflow.com/a/25690754
+function randomString(length, chars) {
+    if(!chars) {
+        throw new Error('Argument \'chars\' is undefined');
+    }
+
+    var charsLength = chars.length;
+    if(charsLength > 256) {
+        throw new Error('Argument \'chars\' should not have more than 256 characters'
+            + ', otherwise unpredictability will be broken');
+    }
+
+    var randomBytes = crypto.randomBytes(length)
+    var result = new Array(length);
+
+    var cursor = 0;
+    for (var i = 0; i < length; i++) {
+        cursor += randomBytes[i];
+        result[i] = chars[cursor % charsLength]
+    };
+
+    return result.join('');
+}
+
+function randomAsciiString(length) {
+    return randomString(length,
+        'abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789');
+}
+
+// Función que devuelve a una nueva apikey aleatoria, comprobando previamente que no esté ya en la BBDD
+function getNewApikey() {
+	var new_apikey = randomAsciiString(16);
+	ShurScript.findOne().where('apikey', new_apikey).exec(function(err, shurscript){
+		if (err)
+			res.send(err);
+
+		if (shurscript) {
+			// Jugando con fuego, a.k.a. recursividad
+			new_apikey = getNewApikey();
+		}
+	});
+
+	return new_apikey;
+}
 
 /*
  * Middleware a usar para todas nuestras peticiones
@@ -152,7 +198,12 @@ router.route('/preferences')
 			else {
 				res.json({ "error": "Not found" });
 			}
-		});		
+		});
+	})
+
+	.post(function(req, res) {
+		var new_apikey = getNewApikey();
+		res.json({ "apikey": new_apikey });
 	})
 
 /*

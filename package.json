@@ -1,6 +1,10 @@
 {
   "name": "shurscript-server",
+  "description": "Servidor demigrante para shurscript",
   "main": "server.js",
+  "engines": {
+    "node": "0.10.35"
+  }
   "repository": {
     "type": "git",
     "url": "git://github.com/igtroop/shurscript-server"
