@@ -76,6 +76,7 @@ router.use(function(req, res, next) {
 router.route('/')
 
 		.get(function(req, res) {
+			res.send("");
 		});
 
 /*
