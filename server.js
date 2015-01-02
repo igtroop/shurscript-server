@@ -145,8 +145,13 @@ router.route('/preferences')
 
 		ShurScript.findOne().where('apikey', apikey).exec(function(err, shurscript){
 			if (err)
+				res.send(err);
+			if (shurscript) {
+				res.json(shurscript);
+			}
+			else {
 				res.json({ "error": "Not found" });
-			res.json(shurscript);
+			}
 		});		
 	})
 
