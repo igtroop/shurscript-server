@@ -43,7 +43,7 @@ app.use(bodyParser.json());
 app.set("json spaces", 2);
 
 // Puerto de escucha del servidor web
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || config.port;
 
 // URL para obtener las preferencias originales e importarlas
 var url_migrate = "http://cloud.shurscript.org:8080/preferences/?apikey=";
@@ -92,7 +92,7 @@ function getNewApikey() {
 	var new_apikey = randomAsciiString(16);
 	ShurScript.findOne().where('apikey', new_apikey).exec(function(err, shurscript){
 		if (err)
-			res.send(err);
+			return "";
 
 		if (shurscript) {
 			// Jugando con fuego, a.k.a. recursividad
@@ -152,8 +152,10 @@ router.route('/migrate')
 								if (!error && response.statusCode === 200) {
 										var shurscript = new ShurScript(body);
 										shurscript.save(function(err) {
-											if (err)
+											if (err) {
 												res.send(err);
+												return;
+											}
 										});
 								}
 						})
@@ -196,11 +198,15 @@ router.route('/preferences')
 		var apikey = req.param('apikey');
 		if (!apikey) {
 			res.json({ "error": "apikey parameter missing" });
+			return;
 		}
 
 		ShurScript.findOne().where('apikey', apikey).exec(function(err, shurscript){
-			if (err)
+			if (err) {
 				res.send(err);
+				return;
+			}
+
 			if (shurscript) {
 				res.json(shurscript);
 			}
@@ -225,9 +231,17 @@ router.route('/preferences/:setting')
 
 	.put(function(req, res) {
 		var apikey = req.param('apikey');
+
+		if (req.params.setting == "apikey") {
+			res.status(403).json({ "error": "You cannot change apikey" });
+			return;
+		}
+
 		ShurScript.findOne().where('apikey', apikey).exec(function(err, shurscript){
-			if (err)
+			if (err) {
 				res.send(err);
+				return;
+			}
 
 			if (shurscript) {
 				shurscript[req.params.setting] = req.body.value;
@@ -239,6 +253,10 @@ router.route('/preferences/:setting')
 						res.json({ "ok": "Preference updated" });
 					}
 				});
+			}
+			else {
+				// Código de estado 403 = API Key no encontrada
+				res.status(403).json({ "error": "Not found" });
 			}
 		});
 	})
