@@ -32,6 +32,9 @@ var crypto = require('crypto');
 // Sólo para propositos de depuración
 var morgan     = require('morgan');
 
+// Cargar configuración del servidor
+var config = require('./app/config/config.json');
+
 var app = express();
 
 app.use(morgan('dev')); // Registramos peticiones a la consola
@@ -46,7 +49,7 @@ var port = process.env.PORT || 8080;
 var url_migrate = "http://cloud.shurscript.org:8080/preferences/?apikey=";
 
 // Conexión a mongo, BBDD 'shurscript'
-var db_uri = process.env.MONGOLAB_URI || 'mongodb://localhost:27017/shurscript'
+var db_uri = process.env.MONGOLAB_URI || config.db_uri
 mongoose.connect(db_uri);
 
 // Nuestro modelo
